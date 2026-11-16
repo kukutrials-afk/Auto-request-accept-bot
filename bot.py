@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import os
@@ -304,6 +305,9 @@ def main() -> None:
         raise RuntimeError("BOT_TOKEN environment variable is missing.")
 
     start_health_server()
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(ChatJoinRequestHandler(handle_join_request))
